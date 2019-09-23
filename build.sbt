@@ -1,8 +1,31 @@
-name := "myList"
+name := "mylist"
+
+organization := "mveeprojects"
 
 version := "0.1"
 
 scalaVersion := "2.12.10"
+
+enablePlugins(DockerPlugin)
+
+dockerfile in docker := {
+  val artifact: File = assembly.value
+  val artifactTargetPath = s"/app/${artifact.name}"
+  new Dockerfile {
+    from("openjdk:8-jre")
+    add(artifact, artifactTargetPath)
+    entryPoint("java", "-jar", artifactTargetPath)
+  }
+}
+
+imageNames in docker := Seq(
+  ImageName(s"${organization.value}/${name.value}:latest"),
+  ImageName(
+    namespace = Some(organization.value),
+    repository = name.value,
+    tag = Some("v" + version.value)
+  )
+)
 
 lazy val macwireVersion = "2.3.1"
 lazy val loggingVersion = "3.9.0"

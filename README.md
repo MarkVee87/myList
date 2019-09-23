@@ -14,6 +14,7 @@ Simple Scala API enabling users to manage a list of assets.
 * https://github.com/cb372/sbt-explicit-dependencies
 * http://www.scalatest.org/getting_started_with_feature_spec
 * http://rest-assured.io/
+* https://github.com/marcuslonnberg/sbt-docker
 
 ### Useful SBT Commands
 
