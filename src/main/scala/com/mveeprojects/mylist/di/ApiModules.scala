@@ -1,7 +1,7 @@
 package com.mveeprojects.mylist.di
 
-import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Route
 import com.mveeprojects.mylist.config.ApiConfig
 import com.mveeprojects.mylist.routes.{AdminRoutes, ApiRoutes}
 
