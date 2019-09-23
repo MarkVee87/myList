@@ -1,14 +1,14 @@
 package com.mveeprojects.mylist
 
 import akka.http.scaladsl.Http
-import com.mveeprojects.mylist.config.MyListActors
-import com.mveeprojects.mylist.di.MyListDeps
+import com.mveeprojects.mylist.config.ActorSystemConfig
+import com.mveeprojects.mylist.di.ApiModules
 
 import scala.util.{Failure, Success}
 
-object MyListMain extends App with MyListDeps with MyListActors {
+object MyListMain extends App with ApiModules with ActorSystemConfig {
 
-  val bindingFuture = Http().bindAndHandle(routes, config.appHostname, config.appPort)
+  val bindingFuture = Http().bindAndHandle(allRoutes, config.appHostname, config.appPort)
 
   bindingFuture.onComplete {
     case Success(binding) =>
