@@ -8,6 +8,8 @@ scalaVersion := "2.12.10"
 
 enablePlugins(DockerPlugin)
 
+test in assembly := {}
+
 dockerfile in docker := {
   val artifact: File = assembly.value
   val artifactTargetPath = s"/app/${artifact.name}"
