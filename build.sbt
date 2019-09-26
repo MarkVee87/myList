@@ -12,11 +12,15 @@ test in assembly := {}
 
 dockerfile in docker := {
   val artifact: File = assembly.value
-  val artifactTargetPath = s"/app/${artifact.name}"
+  val artifactTargetPath = s"/app/"
+  val artifactName: String = artifact.getName
   new Dockerfile {
     from("openjdk:8-jre")
-    add(artifact, artifactTargetPath)
-    entryPoint("java", "-jar", artifactTargetPath)
+    runRaw(s"mkdir -p $artifactTargetPath")
+    copy(artifact, s"$artifactTargetPath/$artifactName")
+    workDir(artifactTargetPath)
+    expose(8080)
+    entryPoint("java", "-jar", artifactName)
   }
 }
 
