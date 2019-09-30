@@ -11,6 +11,7 @@ enablePlugins(DockerPlugin)
 test in assembly := {}
 
 dockerfile in docker := {
+  buildOptions in docker := BuildOptions(cache = false)
   val artifact: File = assembly.value
   val artifactTargetPath = s"/app/"
   val artifactName: String = artifact.getName
@@ -19,7 +20,7 @@ dockerfile in docker := {
     runRaw(s"mkdir -p $artifactTargetPath")
     copy(artifact, s"$artifactTargetPath/$artifactName")
     workDir(artifactTargetPath)
-    expose(8080)
+    expose(9099)
     entryPoint("java", "-jar", artifactName)
   }
 }
