@@ -47,6 +47,7 @@ libraryDependencies ++= configDependencies
 libraryDependencies ++= akkaDependencies
 libraryDependencies ++= loggingDependencies
 libraryDependencies ++= testingDependencies
+libraryDependencies ++= couchbaseDependencies
 
 val configDependencies = Seq(
   "com.softwaremill.macwire" %% "macros" % macwireVersion,
@@ -68,4 +69,9 @@ val loggingDependencies = Seq(
 val testingDependencies = Seq(
   "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
   "io.rest-assured" % "rest-assured" % restAssuredVersion % Test
+)
+
+val couchbaseDependencies = Seq(
+  "com.couchbase.client" % "java-client" % "2.7.9",
+  "net.liftweb" %% "lift-json" % "3.3.0"
 )
