@@ -9,7 +9,7 @@ class AdminRoutesSpec extends FeatureSpec with GivenWhenThen with Matchers with 
     scenario("admin/status endpoint should return 200") {
       When("I send a request to the admin/status endpoint")
       val response = adminRequest("status")
-      Then("I should receive a 200 response with message body \"ok\"")
+      Then("I should receive a 200 response with message body \"up\"")
       response.statusCode() shouldBe 200
     }
   }

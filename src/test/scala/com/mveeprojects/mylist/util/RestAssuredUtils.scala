@@ -6,10 +6,10 @@ import io.restassured.response.Response
 trait RestAssuredUtils {
 
   def adminRequest(path: String): Response = {
-    RestAssured.when().get(s"http://localhost:8080/admin/$path")
+    RestAssured.when().get(s"http://localhost:80/admin/$path")
   }
 
   def apiRequest(path: String): Response = {
-    RestAssured.when().get(s"http://localhost:8080/mylist/$path")
+    RestAssured.when().get(s"http://localhost:80/mylist/$path")
   }
 }
