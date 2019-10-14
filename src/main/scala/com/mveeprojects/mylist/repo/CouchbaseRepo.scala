@@ -16,16 +16,15 @@ class CouchbaseRepo extends ApiModules {
   cluster.authenticate(config.couchbaseUsername, config.couchbasePassword)
   private val bucket: Bucket = cluster.openBucket(config.couchbaseBucketName)
 
-  val example_list_item = ListItem("some_name", "some_description")
-  val example_list_item_id = "1"
+  private val example_list_item = ListItem("some_name", "some_description")
 
-  def storeExampleListItem(): Unit = {
+  def storeListItem(userId: Int): Unit = {
     val doc: JsonObject = JsonObject.fromJson(write(example_list_item))
-    bucket.upsert(JsonDocument.create(example_list_item_id, doc))
+    bucket.upsert(JsonDocument.create(userId.toString, doc))
   }
 
-  def retrieveExampleListItem(): ListItem = {
-    val result = bucket.get(example_list_item_id)
+  def retrieveListItem(userId: Int): ListItem = {
+    val result = bucket.get(userId.toString)
     parse(result.content().toString).extract[ListItem]
   }
 }

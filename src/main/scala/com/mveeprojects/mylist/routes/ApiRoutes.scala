@@ -6,10 +6,17 @@ import akka.http.scaladsl.server.Route
 
 class ApiRoutes {
   val route: Route = pathPrefix("mylist") {
-    get {
-      path("retrieve") {
-        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>retrieve route</h1>"))
+    concat(
+      get {
+        path("retrieve" / IntNumber) { userId =>
+          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<h1>retrieving $userId's items</h1>"))
+        }
+      },
+      put {
+        path("additem" / IntNumber) { userId =>
+          complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, s"<h1>adding to $userId's items</h1>"))
+        }
       }
-    }
+    )
   }
 }
