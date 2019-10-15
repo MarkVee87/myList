@@ -10,9 +10,11 @@ class ApiRoutesSpec extends FeatureSpec with GivenWhenThen with Matchers with Re
   feature("MyList GET routes should return 200") {
     scenario("mylist/retrieve endpoint should return 200") {
       Given("the app is running")
-      adminRequest("status").statusCode() shouldBe 200
+      adminGetRequest("status").statusCode() shouldBe 200
+
       When(s"I send a request to the mylist/retrieve endpoint with userId $testUserId")
-      val response = apiRequest(s"retrieve/$testUserId")
+      val response = apiGetRequest(s"retrieve/$testUserId")
+
       Then("I should receive a 200 response")
       response.statusCode() shouldBe 200
     }
