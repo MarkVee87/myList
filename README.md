@@ -17,6 +17,7 @@ Simple Scala API enabling users to manage a list of assets.
 * http://www.scalatest.org/getting_started_with_feature_spec
 * http://rest-assured.io/
 * https://github.com/marcuslonnberg/sbt-docker
+* https://doc.akka.io/docs/akka-http/current/routing-dsl/directives/index.html#composing-directives-with-operator
 
 ### Useful SBT Commands
 
