@@ -11,7 +11,7 @@ class AdminRoutesSpec extends FeatureSpec with GivenWhenThen with Matchers with 
       val response = adminGetRequest("status")
       Then("I should receive a 200 response with message body \"up\"")
       response.statusCode() shouldBe 200
-      response.body() shouldBe "up"
+      response.body().print() shouldBe "up"
     }
   }
 }

@@ -1,11 +1,9 @@
 package com.mveeprojects.mylist.routes
 
-import com.mveeprojects.mylist.util.RestAssuredUtils
+import com.mveeprojects.mylist.util.{RestAssuredUtils, TestConfig}
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 
-class ApiRoutesSpec extends FeatureSpec with GivenWhenThen with Matchers with RestAssuredUtils {
-
-  private val testUserId = 1234
+class ApiRoutesSpec extends FeatureSpec with GivenWhenThen with Matchers with RestAssuredUtils with TestConfig {
 
   feature("MyList GET routes should return 200") {
     scenario("mylist/retrieve endpoint should return 200") {

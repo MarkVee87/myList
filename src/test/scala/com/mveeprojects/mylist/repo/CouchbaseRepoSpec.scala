@@ -7,8 +7,6 @@ import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 
 class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
 
-  private val testUserId = testId
-
   feature("Users list CRUD routes") {
     scenario("/createuser route should create a new user in the DB") {
 
