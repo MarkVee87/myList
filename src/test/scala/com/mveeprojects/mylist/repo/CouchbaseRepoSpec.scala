@@ -1,14 +1,13 @@
 package com.mveeprojects.mylist.repo
 
 import com.mveeprojects.mylist.model.UsersList
-import com.mveeprojects.mylist.util.RestAssuredUtils
-import com.mveeprojects.mylist.util.CouchbaseUtils
+import com.mveeprojects.mylist.util.{CouchbaseUtils, RestAssuredUtils, TestConfig}
 import io.restassured.response.Response
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 
-class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers with RestAssuredUtils with CouchbaseUtils {
+class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
 
-  private val testUserId = 99999
+  private val testUserId = testId
 
   feature("Users list CRUD routes") {
     scenario("/createuser route should create a new user in the DB") {
@@ -23,7 +22,7 @@ class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkUserExists(testUserId) shouldBe true
     }
 
-    // test failing due to issue with parseToUserList()
+    // test failing due to issue with CouchbaseUtils.parseToUserList()
     scenario("/retrieve route should return a users list from the DB") {
       Given("Couchbase is running locally")
       checkLocalCouchbase.statusCode() shouldBe 200

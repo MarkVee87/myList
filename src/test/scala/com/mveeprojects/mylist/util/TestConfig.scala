@@ -5,6 +5,8 @@ import com.typesafe.config.{Config, ConfigFactory}
 trait TestConfig {
   val config: Config = ConfigFactory.load("testconfig")
 
+  val testId: Int = config.getInt("testuserid")
+
   val appHostname: String = config.getString("mylist.hostname")
   val appPort: Int = config.getInt("mylist.port")
 
