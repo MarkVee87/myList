@@ -41,6 +41,6 @@ The [sbt-explicit-dependencies plugin](https://github.com/cb372/sbt-explicit-dep
     * Cluster Name: `mylistcluster`
     * Create Admin Username: `admin`
     * Create/Confirm Password: `password`
-3) Buckets (left hand nav) -> Add Bucket (top right)
+3) `Buckets` (left hand nav) -> `Add Bucket` (top right)
     * Name: `mylistbucket`
     * Wait for bar next to the bucket name to turn from grey/orange to green
