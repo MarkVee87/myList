@@ -8,9 +8,13 @@ import org.scalatest.{BeforeAndAfterAll, FeatureSpec, GivenWhenThen, Matchers}
 class ApiRoutesSpec extends FeatureSpec with GivenWhenThen with BeforeAndAfterAll with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
 
   override def beforeAll(): Unit = {
-    Given(s"Couchbase is running locally and all previous data for the test user ($testUserId) has been deleted")
+    Given(s"Couchbase is running locally")
     checkLocalCouchbase.statusCode() shouldBe 200
-    deleteUsersListByUserId(testUserId)
+  }
+
+  override def afterAll(): Unit = {
+    Given(s"All previous data for the test user ($testUserId) has been deleted")
+    deleteUsersListByUserId(testUserId) shouldBe true
   }
 
   feature("Users list CRUD routes") {
