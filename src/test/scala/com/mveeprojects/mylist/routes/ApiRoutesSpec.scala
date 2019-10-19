@@ -1,11 +1,11 @@
-package com.mveeprojects.mylist.repo
+package com.mveeprojects.mylist.routes
 
 import com.mveeprojects.mylist.model.UsersList
 import com.mveeprojects.mylist.util.{CouchbaseUtils, RestAssuredUtils, TestConfig}
 import io.restassured.response.Response
 import org.scalatest.{BeforeAndAfterAll, FeatureSpec, GivenWhenThen, Matchers}
 
-class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with BeforeAndAfterAll with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
+class ApiRoutesSpec extends FeatureSpec with GivenWhenThen with BeforeAndAfterAll with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
 
   override def beforeAll(): Unit = {
     Given(s"Couchbase is running locally and all previous data for the test user ($testUserId) has been deleted")
