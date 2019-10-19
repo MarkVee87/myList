@@ -3,14 +3,17 @@ package com.mveeprojects.mylist.repo
 import com.mveeprojects.mylist.model.UsersList
 import com.mveeprojects.mylist.util.{CouchbaseUtils, RestAssuredUtils, TestConfig}
 import io.restassured.response.Response
-import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
+import org.scalatest.{BeforeAndAfterAll, FeatureSpec, GivenWhenThen, Matchers}
 
-class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
+class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with BeforeAndAfterAll with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
+
+  override def beforeAll(): Unit = {
+    Given("Couchbase is running locally")
+    checkLocalCouchbase.statusCode() shouldBe 200
+  }
 
   feature("Users list CRUD routes") {
     scenario("/createuser route should create a new user in the DB") {
-      Given("Couchbase is running locally")
-      checkLocalCouchbase.statusCode() shouldBe 200
       When(s"I call the /createuser endpoint with user id $testUserId")
       apiPutRequest(s"createuser/$testUserId")
       Then(s"The user with id $testUserId should exist in the DB")
@@ -18,8 +21,6 @@ class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers wit
     }
 
     scenario("/retrieve route should return a users list from the DB") {
-      Given("Couchbase is running locally")
-      checkLocalCouchbase.statusCode() shouldBe 200
       When(s"I call the /retrieve endpoint with user id $testUserId")
       val response: Response = apiGetRequest(s"retrieve/$testUserId")
       Then(s"A UsersList with id $testUserId and an empty List shouldBe returned")
@@ -29,8 +30,6 @@ class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with Matchers wit
     }
 
     scenario("/additem route should update a users list in the DB") {
-      Given("Couchbase is running locally")
-      checkLocalCouchbase.statusCode() shouldBe 200
       When(s"I call the /additem endpoint with user id $testUserId")
       val response: Response = apiPutRequest(s"additem/$testUserId/$testItemId")
       Then("I should receive a 201 response with a confirmation message")
