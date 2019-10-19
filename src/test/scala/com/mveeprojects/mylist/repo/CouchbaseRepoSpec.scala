@@ -8,8 +8,9 @@ import org.scalatest.{BeforeAndAfterAll, FeatureSpec, GivenWhenThen, Matchers}
 class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with BeforeAndAfterAll with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
 
   override def beforeAll(): Unit = {
-    Given("Couchbase is running locally")
+    Given(s"Couchbase is running locally and all previous data for the test user ($testUserId) has been deleted")
     checkLocalCouchbase.statusCode() shouldBe 200
+    deleteUsersListByUserId(testUserId)
   }
 
   feature("Users list CRUD routes") {
@@ -21,6 +22,9 @@ class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with BeforeAndAft
     }
 
     scenario("/retrieve route should return a users list from the DB") {
+      Given(s"The user with id $testUserId exists in the DB")
+      apiPutRequest(s"createuser/$testUserId")
+      checkUserExists(testUserId) shouldBe true
       When(s"I call the /retrieve endpoint with user id $testUserId")
       val response: Response = apiGetRequest(s"retrieve/$testUserId")
       Then(s"A UsersList with id $testUserId and an empty List shouldBe returned")
@@ -30,6 +34,9 @@ class CouchbaseRepoSpec extends FeatureSpec with GivenWhenThen with BeforeAndAft
     }
 
     scenario("/additem route should update a users list in the DB") {
+      Given(s"The user with id $testUserId exists in the DB")
+      apiPutRequest(s"createuser/$testUserId")
+      checkUserExists(testUserId) shouldBe true
       When(s"I call the /additem endpoint with user id $testUserId")
       val response: Response = apiPutRequest(s"additem/$testUserId/$testItemId")
       Then("I should receive a 201 response with a confirmation message")

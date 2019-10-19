@@ -14,9 +14,9 @@ trait CouchbaseUtils extends TestConfig {
   cluster.authenticate(couchbaseUsername, couchbasePassword)
   private val bucket: Bucket = cluster.openBucket(couchbaseBucketName)
 
-  def deleteUsersListByUserId(userId: Int): Boolean = {
+  def deleteUsersListByUserId(userId: String): Boolean = {
     try {
-      bucket.remove(userId.toString)
+      bucket.remove(userId)
       true
     } catch {
       case _: DocumentDoesNotExistException => true
