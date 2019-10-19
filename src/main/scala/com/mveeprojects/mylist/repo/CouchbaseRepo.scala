@@ -23,13 +23,17 @@ class CouchbaseRepo extends ApiModules {
   }
 
   def addToUsersList(userId: Int, itemId: Int): Unit = {
-    val oldUsersList: UsersList = retrieveUsersList(userId)
+    val oldUsersList: UsersList = getFromULFromCouchbase(userId)
     val newUserList: UsersList = oldUsersList.copy(itemList = oldUsersList.itemList :+ ListItem(itemId, "blah"))
     val doc: JsonObject = JsonObject.fromJson(write(newUserList))
     bucket.upsert(JsonDocument.create(userId.toString, doc))
   }
 
-  def retrieveUsersList(userId: Int): UsersList = {
+  def retrieveUsersList(userId: Int): String = {
+    write(getFromULFromCouchbase(userId))
+  }
+
+  private def getFromULFromCouchbase(userId: Int): UsersList = {
     val result = bucket.get(userId.toString)
     parse(result.content().toString).extract[UsersList]
   }

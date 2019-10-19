@@ -19,6 +19,17 @@ Simple Scala API enabling users to manage a list of assets.
 * https://github.com/marcuslonnberg/sbt-docker
 * https://doc.akka.io/docs/akka-http/current/routing-dsl/directives/index.html#composing-directives-with-operator
 
+### Running local Couchbase docker container
+
+1) Run `docker run -d -p8091:8091 -p11210:11210 --name=couchbasedb couchbase:6.0.2`
+2) Login to couchbase (`localhost:8091`) then choose `Setup New Cluster`
+    * Cluster Name: `mylistcluster`
+    * Create Admin Username: `admin`
+    * Create/Confirm Password: `password`
+3) `Buckets` (left hand nav) -> `Add Bucket` (top right)
+    * Name: `mylistbucket`
+    * Wait for bar next to the bucket name to turn from grey/orange to green
+
 ### Useful SBT Commands
 
 `sbtw`
@@ -32,15 +43,3 @@ The [sbt-docker plugin](https://github.com/marcuslonnberg/sbt-docker) is being u
 `./sbtw unusedCompileDependencies`
 
 The [sbt-explicit-dependencies plugin](https://github.com/cb372/sbt-explicit-dependencies) has been added to this project to enable this command to highlight unused sbt dependencies.
-
-
-### Running local Couchbase docker container
-
-1) Run `docker run -d -p8091:8091 -p11210:11210 --name=couchbasedb couchbase:6.0.2`
-2) Login to couchbase (`localhost:8091`) then choose `Setup New Cluster`
-    * Cluster Name: `mylistcluster`
-    * Create Admin Username: `admin`
-    * Create/Confirm Password: `password`
-3) `Buckets` (left hand nav) -> `Add Bucket` (top right)
-    * Name: `mylistbucket`
-    * Wait for bar next to the bucket name to turn from grey/orange to green
