@@ -24,15 +24,13 @@ trait CouchbaseUtils extends TestConfig {
     }
   }
 
-  def checkUserExists(userId: Int): Boolean = {
-    Option(bucket.get(userId.toString)) match {
+  def checkUserExists(userId: String): Boolean = {
+    Option(bucket.get(userId)) match {
       case Some(_) => true
       case None => false
     }
   }
 
-  // this needs fixing
-  // net.liftweb.json.JsonParser$ParseException: unknown token U (Near: Us)
   def parseToUserList(response: Response): UsersList = {
     val responseBody: String = response.getBody.prettyPrint
     parse(responseBody).extract[UsersList]

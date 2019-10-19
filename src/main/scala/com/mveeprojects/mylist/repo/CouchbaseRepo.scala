@@ -16,25 +16,25 @@ class CouchbaseRepo extends ApiModules {
   cluster.authenticate(config.couchbaseUsername, config.couchbasePassword)
   private val bucket: Bucket = cluster.openBucket(config.couchbaseBucketName)
 
-  def createUser(userId: Int): Unit = {
+  def createUser(userId: String): Unit = {
     val newuserlist = UsersList(userId, List.empty[ListItem])
     val doc: JsonObject = JsonObject.fromJson(write(newuserlist))
     bucket.upsert(JsonDocument.create(userId.toString, doc))
   }
 
-  def addToUsersList(userId: Int, itemId: Int): Unit = {
-    val oldUsersList: UsersList = getFromULFromCouchbase(userId)
+  def addToUsersList(userId: String, itemId: String): Unit = {
+    val oldUsersList: UsersList = getUserListFromCouchbase(userId)
     val newUserList: UsersList = oldUsersList.copy(itemList = oldUsersList.itemList :+ ListItem(itemId, "blah"))
     val doc: JsonObject = JsonObject.fromJson(write(newUserList))
     bucket.upsert(JsonDocument.create(userId.toString, doc))
   }
 
-  def retrieveUsersList(userId: Int): String = {
-    write(getFromULFromCouchbase(userId))
+  def retrieveUsersList(userId: String): String = {
+    write(getUserListFromCouchbase(userId))
   }
 
-  private def getFromULFromCouchbase(userId: Int): UsersList = {
-    val result = bucket.get(userId.toString)
+  private def getUserListFromCouchbase(userId: String): UsersList = {
+    val result = bucket.get(userId)
     parse(result.content().toString).extract[UsersList]
   }
 }
