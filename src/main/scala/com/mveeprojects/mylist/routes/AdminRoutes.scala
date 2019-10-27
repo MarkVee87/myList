@@ -5,11 +5,19 @@ import akka.http.scaladsl.server.Route
 import com.mveeprojects.mylist.di.ApiModules
 
 class AdminRoutes extends ApiModules {
-  val route: Route = pathPrefix("admin") {
-    get {
-      path("status") {
-        complete("up")
-      }
+  val route: Route =
+    pathPrefix("admin") {
+      concat(
+        get {
+          path("status") {
+            complete("up")
+          }
+        },
+        get {
+          path("health") {
+            complete(healthCheckUtils.getBucketName)
+          }
+        }
+      )
     }
-  }
 }

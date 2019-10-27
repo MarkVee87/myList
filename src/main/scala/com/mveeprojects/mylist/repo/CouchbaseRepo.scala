@@ -1,32 +1,27 @@
 package com.mveeprojects.mylist.repo
 
-import com.couchbase.client.java.{Bucket, CouchbaseCluster}
 import com.couchbase.client.java.document.JsonDocument
 import com.couchbase.client.java.document.json.JsonObject
-import com.mveeprojects.mylist.di.ApiModules
+import com.mveeprojects.mylist.exceptions.{DuplicateItemException, UserNotFoundException}
 import com.mveeprojects.mylist.model.{ListItem, UsersList}
 import net.liftweb.json.Serialization.write
 import net.liftweb.json.{DefaultFormats, parse}
 
-class CouchbaseRepo extends ApiModules {
+class CouchbaseRepo extends CouchbaseConnection {
 
   implicit val formats: DefaultFormats.type = DefaultFormats
 
-  private val cluster: CouchbaseCluster = CouchbaseCluster.create(config.couchbaseHostname)
-  cluster.authenticate(config.couchbaseUsername, config.couchbasePassword)
-  private val bucket: Bucket = cluster.openBucket(config.couchbaseBucketName)
-
   def createUser(userId: String): Unit = {
-    val newuserlist = UsersList(userId, List.empty[ListItem])
-    val doc: JsonObject = JsonObject.fromJson(write(newuserlist))
-    bucket.upsert(JsonDocument.create(userId.toString, doc))
+    val doc: JsonObject = JsonObject.fromJson(write(UsersList(userId, List.empty[ListItem])))
+    mylistbucket.upsert(JsonDocument.create(userId.toString, doc))
   }
 
   def addToUsersList(userId: String, itemId: String): Unit = {
     val oldUsersList: UsersList = getUserListFromCouchbase(userId)
+    if (isInUsersListAlready(oldUsersList, itemId)) throw DuplicateItemException(s"Item $itemId already exists in user $userId's list")
     val newUserList: UsersList = oldUsersList.copy(itemList = oldUsersList.itemList :+ ListItem(itemId, "blah"))
     val doc: JsonObject = JsonObject.fromJson(write(newUserList))
-    bucket.upsert(JsonDocument.create(userId.toString, doc))
+    mylistbucket.upsert(JsonDocument.create(userId.toString, doc))
   }
 
   def retrieveUsersList(userId: String): String = {
@@ -34,7 +29,15 @@ class CouchbaseRepo extends ApiModules {
   }
 
   private def getUserListFromCouchbase(userId: String): UsersList = {
-    val result = bucket.get(userId)
-    parse(result.content().toString).extract[UsersList]
+    try {
+      parse(mylistbucket.get(userId).content().toString).extract[UsersList]
+    } catch {
+      case _: NullPointerException => throw UserNotFoundException(s"User $userId does not exist in the database")
+    }
+  }
+
+  private def isInUsersListAlready(oldUsersList: UsersList, itemId: String): Boolean = {
+    if (oldUsersList.itemList.exists(_.id == itemId)) true
+    else false
   }
 }
