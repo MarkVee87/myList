@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.routes
+package com.mveeprojects.mylist.route
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route

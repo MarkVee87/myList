@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.exceptions
+package com.mveeprojects.mylist.exception
 
 import akka.http.scaladsl.model.{HttpResponse, StatusCode}
 import akka.http.scaladsl.server.Directives.complete

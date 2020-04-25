@@ -11,5 +11,6 @@ class ApiConfig {
   val couchbaseUsername: String = config.getString("couchbase.username")
   val couchbasePassword: String = config.getString("couchbase.password")
   val couchbaseHostname: String = config.getString("couchbase.hostname")
-  val couchbaseBucketName: String = config.getString("couchbase.bucketname")
+  val couchbaseMyListBucketName: String = config.getString("couchbase.mylistBucketName")
+  val couchbaseItemBucketName: String = config.getString("couchbase.itemBucketName")
 }

@@ -12,7 +12,7 @@ trait CouchbaseUtils extends TestConfig {
 
   private val cluster: CouchbaseCluster = CouchbaseCluster.create(couchbaseHostname)
   cluster.authenticate(couchbaseUsername, couchbasePassword)
-  private val bucket: Bucket = cluster.openBucket(couchbaseBucketName)
+  private val bucket: Bucket = cluster.openBucket(couchbaseMyListBucketName)
 
   def deleteUsersListByUserId(userId: String): Boolean = {
     try {

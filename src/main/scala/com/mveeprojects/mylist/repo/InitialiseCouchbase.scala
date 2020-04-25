@@ -4,15 +4,20 @@ import akka.Done
 import com.couchbase.client.java.bucket.BucketType
 import com.couchbase.client.java.cluster.DefaultBucketSettings
 import com.mveeprojects.mylist.config.ActorSystemConfig
-import com.mveeprojects.mylist.exceptions.DependencyInitialisationException
+import com.mveeprojects.mylist.exception.DependencyInitialisationException
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
 object InitialiseCouchbase extends CouchbaseConnection with ActorSystemConfig {
 
+// https://forums.couchbase.com/t/read-all-the-documents-from-a-bucket/5914/2
+// In order to get all docs from the items bucket we will either need a PK (not good) or a simple view to omit all docs
+// e.g. function (doc, meta) { emit(doc); }
+// bucket.query(ViewQuery.from("test1", "all")).totalRows()
+
   def initialise: Done = {
-    Await.result(upsertBucket(config.couchbaseBucketName), 10 seconds)
+    Await.result(upsertBucket(config.couchbaseMyListBucketName), 10 seconds)
   }
 
   private def upsertBucket(bucketName: String): Future[Done] = Future {

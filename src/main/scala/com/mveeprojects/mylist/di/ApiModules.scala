@@ -3,10 +3,10 @@ package com.mveeprojects.mylist.di
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.mveeprojects.mylist.config.ApiConfig
-import com.mveeprojects.mylist.exceptions.MyListExceptionHandler
+import com.mveeprojects.mylist.exception.MyListExceptionHandler
 import com.mveeprojects.mylist.repo.CouchbaseRepo
-import com.mveeprojects.mylist.routes.{AdminRoutes, ApiRoutes}
-import com.mveeprojects.mylist.utils.HealthCheckUtils
+import com.mveeprojects.mylist.route.{AdminRoutes, ApiRoutes}
+import com.mveeprojects.mylist.util.HealthCheckUtils
 
 trait ApiModules extends MyListExceptionHandler {
 

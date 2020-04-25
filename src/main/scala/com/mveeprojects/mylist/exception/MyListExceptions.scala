@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.exceptions
+package com.mveeprojects.mylist.exception
 
 class MyListException(val msg: String) extends Exception(msg)
 

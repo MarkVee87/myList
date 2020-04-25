@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.routes
+package com.mveeprojects.mylist.route
 
 import akka.http.scaladsl.model.StatusCode
 import akka.http.scaladsl.server.Directives.{complete, get, path, _}
@@ -9,7 +9,12 @@ class ApiRoutes extends ApiModules {
   val route: Route =
     pathPrefix("mylist") {
       concat(
-        // also want an endpoint to show items in products bucket (only these can be added to list)
+        // also want an endpoint to show items in item bucket (only these can be added to list)
+        get {
+          path("items" / "all") {
+            complete(StatusCode.int2StatusCode(200))
+          }
+        },
         get {
           path("retrieve" / Segment) { userId =>
             complete(StatusCode.int2StatusCode(200), couchbaseRepo.retrieveUsersList(userId).toString)

@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.routes
+package com.mveeprojects.mylist.route
 
 import com.mveeprojects.mylist.util.RestAssuredUtils
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}

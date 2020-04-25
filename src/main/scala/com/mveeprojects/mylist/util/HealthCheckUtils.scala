@@ -1,10 +1,10 @@
-package com.mveeprojects.mylist.utils
+package com.mveeprojects.mylist.util
 
 import com.mveeprojects.mylist.repo.CouchbaseConnection
 
 class HealthCheckUtils extends CouchbaseConnection {
 
   def getBucketName: String = {
-    mylistbucket.bucketManager().info().name()
+    mylistBucket.bucketManager().info().name()
   }
 }
