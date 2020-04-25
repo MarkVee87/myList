@@ -4,17 +4,18 @@ import akka.Done
 import com.couchbase.client.java.bucket.BucketType
 import com.couchbase.client.java.cluster.DefaultBucketSettings
 import com.mveeprojects.mylist.config.ActorSystemConfig
+import com.mveeprojects.mylist.exceptions.DependencyInitialisationException
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
 
 object InitialiseCouchbase extends CouchbaseConnection with ActorSystemConfig {
 
   def initialise: Done = {
-
-    upsertBucket(config.couchbaseBucketName)
+    Await.result(upsertBucket(config.couchbaseBucketName), 10 seconds)
   }
 
-  private def upsertBucket(bucketName: String): Future[Boolean] = Future {
+  private def upsertBucket(bucketName: String): Future[Done] = Future {
     val bucketSettings = DefaultBucketSettings.builder()
       .`type`(BucketType.COUCHBASE)
       .name(bucketName)
@@ -22,17 +23,15 @@ object InitialiseCouchbase extends CouchbaseConnection with ActorSystemConfig {
 
     try {
       if (cluster.clusterManager().hasBucket(bucketSettings.name())) {
-        logger.info("1")
+        logger.info(s"Bucket ${bucketSettings.name} already exits, updating config if needed")
         cluster.clusterManager().updateBucket(bucketSettings)
       } else {
-        logger.info("2")
+        logger.info(s"Bucket ${bucketSettings.name} does not exist, creating bucket")
         cluster.clusterManager().insertBucket(bucketSettings)
       }
     } catch {
-      case _: Exception =>
-        logger.info("wtf")
-        return false
+      case ex: Exception => throw DependencyInitialisationException(ex.getMessage)
     }
-    true
+    Done
   }
 }

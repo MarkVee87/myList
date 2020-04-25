@@ -6,5 +6,5 @@ import com.mveeprojects.mylist.di.ApiModules
 trait CouchbaseConnection extends ApiModules {
   val cluster: CouchbaseCluster = CouchbaseCluster.create(config.couchbaseHostname)
   cluster.authenticate(config.couchbaseUsername, config.couchbasePassword)
-  val mylistbucket: Bucket = cluster.openBucket(config.couchbaseBucketName)
+  lazy val mylistbucket: Bucket = cluster.openBucket(config.couchbaseBucketName)
 }
