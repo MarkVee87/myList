@@ -8,8 +8,6 @@ version := "0.1"
 
 scalaVersion := "2.13.4"
 
-enablePlugins(DockerPlugin)
-
 test in assembly := {}
 
 dockerfile in docker := {
@@ -43,3 +41,7 @@ libraryDependencies ++= (
     testingDependencies ++
     couchbaseDependencies
 )
+
+enablePlugins(JavaAppPackaging, DockerComposePlugin)
+
+dockerImageCreationTask := (publishLocal in Docker).value

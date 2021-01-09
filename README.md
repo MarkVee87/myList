@@ -4,7 +4,7 @@ Simple Scala API enabling users to manage a list of assets.
 
 ### Technologies used (or to be used)
 
-* Scala 2.12.10
+* Scala 2.13.4
 * Couchbase 6.0.2
 * Kafka
 * Akka HTTP
@@ -19,17 +19,22 @@ Simple Scala API enabling users to manage a list of assets.
 * https://github.com/marcuslonnberg/sbt-docker
 * https://doc.akka.io/docs/akka-http/current/routing-dsl/directives/index.html#composing-directives-with-operator
 * https://doc.akka.io/docs/akka-http/current/routing-dsl/exception-handling.html
+* https://github.com/Tapad/sbt-docker-compose
 
-### Running local Couchbase docker container
+### To run all tests
 
-1) Run `docker run -d -p8091:8091 -p11210:11210 --name=couchbasedb couchbase:6.0.2`
-2) Login to couchbase (`localhost:8091`) then choose `Setup New Cluster`
-    * Cluster Name: `mylistcluster`
-    * Create Admin Username: `admin`
-    * Create/Confirm Password: `password`
-3) `Buckets` (left hand nav) -> `Add Bucket` (top right)
-    * Name: `mylistbucket`
-    * Wait for bar next to the bucket name to turn from grey/orange to green
+At the moment the process is as follows:
+* Run `./docker/initCouchbaseVanillaDocker.sh` to start and configure Couchbase in docker
+* Run the Main class of MyList in IntelliJ
+* `./sbt test`
+
+I'm working on getting the instantiation of the DB etc running in a nice automated manner in Docker Compose instead as described in the section below.
+
+### Docker Compose:
+
+* This is still a work in progress, apps run, just need to figure out some connectivity issues preventing the tests from passing
+* Build the mylist-couchbase-setup docker image `docker build . -t mylist-cb-setup`
+* Run `./sbt dockerComposeUp` from the root of this project (`./sbt dockerComposeStop` to shut everything down)
 
 ### Useful SBT Commands
 
@@ -44,3 +49,11 @@ The [sbt-docker plugin](https://github.com/marcuslonnberg/sbt-docker) is being u
 `./sbt unusedCompileDependencies`
 
 The [sbt-explicit-dependencies plugin](https://github.com/cb372/sbt-explicit-dependencies) has been added to this project to enable this command to highlight unused sbt dependencies.
+
+`./sbt dockerComposeUp`
+
+`./sbt dockerComposeStop`
+
+`./sbt dockerComposeRestart`
+
+The above are provided by the [DockerComposePlugin](https://github.com/Tapad/sbt-docker-compose)

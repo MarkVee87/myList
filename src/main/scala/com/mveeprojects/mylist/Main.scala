@@ -8,9 +8,9 @@ import com.mveeprojects.mylist.utils.Logging
 
 import scala.util.{Failure, Success}
 
-object MyListMain extends App with ApiModules with ActorSystemConfig with Logging {
+object Main extends App with ApiModules with ActorSystemConfig with Logging {
 
-  logger.info("Initialising couchbase")
+  logger.info("Initialising Couchbase")
 
   InitialiseCouchbase.initialise
 

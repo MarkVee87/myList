@@ -1,0 +1,25 @@
+version: '3.4'
+services:
+
+  mylist:
+    image: mylist:<localBuild>
+    ports:
+      - 80:80
+    depends_on:
+      - couchbase
+      - cb-setup
+    environment:
+      CB_HOSTNAME: couchbase
+
+  couchbase:
+    image: couchbase:6.0.2
+    ports:
+      - 8091:8091
+      - 11210:11210
+
+  cb-setup:
+    image: mylist-cb-setup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - couchbase
