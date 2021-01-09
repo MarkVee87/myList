@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.repo.couchbase
+package com.mveeprojects.mylist.repo
 
 import com.couchbase.client.java.{Bucket, CouchbaseCluster}
 import com.mveeprojects.mylist.di.ApiModules

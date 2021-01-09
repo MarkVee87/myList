@@ -3,7 +3,7 @@ package com.mveeprojects.mylist
 import akka.http.scaladsl.Http
 import com.mveeprojects.mylist.config.ActorSystemConfig
 import com.mveeprojects.mylist.di.ApiModules
-import com.mveeprojects.mylist.repo.couchbase.InitialiseCouchbase
+import com.mveeprojects.mylist.repo.InitialiseCouchbase
 import com.mveeprojects.mylist.utils.Logging
 
 import scala.util.{Failure, Success}

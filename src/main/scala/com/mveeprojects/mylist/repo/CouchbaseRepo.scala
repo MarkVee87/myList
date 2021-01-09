@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.repo.couchbase
+package com.mveeprojects.mylist.repo
 
 import com.couchbase.client.java.document.JsonDocument
 import com.couchbase.client.java.document.json.JsonObject

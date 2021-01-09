@@ -1,4 +1,4 @@
-package com.mveeprojects.mylist.repo.couchbase
+package com.mveeprojects.mylist.repo
 
 import akka.Done
 import com.couchbase.client.java.bucket.BucketType

@@ -9,7 +9,6 @@ class ApiRoutes extends ApiModules {
   val route: Route =
     pathPrefix("mylist") {
       concat(
-        // also want an endpoint to show items in products bucket (only these can be added to list)
         get {
           path("retrieve" / Segment) { userId =>
             complete(StatusCodes.OK -> couchbaseRepo.retrieveUsersList(userId))
@@ -28,5 +27,4 @@ class ApiRoutes extends ApiModules {
         }
       )
     }
-
 }

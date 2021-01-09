@@ -4,7 +4,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.mveeprojects.mylist.config.Configuration
 import com.mveeprojects.mylist.exceptions.MyListExceptionHandler
-import com.mveeprojects.mylist.repo.couchbase.CouchbaseRepo
+import com.mveeprojects.mylist.repo.CouchbaseRepo
 import com.mveeprojects.mylist.routes.{AdminRoutes, ApiRoutes}
 import com.mveeprojects.mylist.utils.HealthCheckUtils
 
