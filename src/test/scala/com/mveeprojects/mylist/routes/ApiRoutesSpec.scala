@@ -5,7 +5,14 @@ import com.mveeprojects.mylist.util.{CouchbaseUtils, RestAssuredUtils, TestConfi
 import io.restassured.response.Response
 import org.scalatest.{BeforeAndAfterAll, FeatureSpec, GivenWhenThen, Matchers}
 
-class ApiRoutesSpec extends FeatureSpec with GivenWhenThen with BeforeAndAfterAll with Matchers with RestAssuredUtils with CouchbaseUtils with TestConfig {
+class ApiRoutesSpec
+    extends FeatureSpec
+    with GivenWhenThen
+    with BeforeAndAfterAll
+    with Matchers
+    with RestAssuredUtils
+    with CouchbaseUtils
+    with TestConfig {
 
   override def beforeAll(): Unit = {
     Given(s"Couchbase is running locally")

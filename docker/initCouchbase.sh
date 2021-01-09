@@ -1,9 +1,8 @@
 docker run -d -p8091:8091 -p11210:11210 --name=couchbasedb couchbase:6.0.2
 
-until curl -I -s http://localhost:8091/ui/index.html
-do
-    echo 'Waiting for Couchbase to initialise'
-    sleep 1
+until curl -I -s http://localhost:8091/ui/index.html; do
+  echo 'Waiting for Couchbase to initialise'
+  sleep 1
 done
 
 docker exec couchbasedb couchbase-cli cluster-init --cluster "couchbase://127.0.0.1" --cluster-name "mylistcluster" \

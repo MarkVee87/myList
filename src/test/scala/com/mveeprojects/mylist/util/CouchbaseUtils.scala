@@ -14,22 +14,20 @@ trait CouchbaseUtils extends TestConfig {
   cluster.authenticate(couchbaseUsername, couchbasePassword)
   private val bucket: Bucket = cluster.openBucket(couchbaseBucketName)
 
-  def deleteUsersListByUserId(userId: String): Boolean = {
+  def deleteUsersListByUserId(userId: String): Boolean =
     try {
       bucket.remove(userId)
       true
     } catch {
       case _: DocumentDoesNotExistException => true
-      case _: Exception => false
+      case _: Exception                     => false
     }
-  }
 
-  def checkUserExists(userId: String): Boolean = {
+  def checkUserExists(userId: String): Boolean =
     Option(bucket.get(userId)) match {
       case Some(_) => true
-      case None => false
+      case None    => false
     }
-  }
 
   def parseToUserList(response: Response): UsersList = {
     val responseBody: String = response.getBody.prettyPrint
