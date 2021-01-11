@@ -6,8 +6,7 @@ object Dependencies {
 
   val configDependencies = Seq(
     "com.softwaremill.macwire" %% "macros"     % macwireVersion,
-    "com.github.pureconfig"    %% "pureconfig" % pureconfigVersion,
-    "com.typesafe"              % "config"     % typesafeConfigVersion
+    "com.github.pureconfig"    %% "pureconfig" % pureconfigVersion
   )
 
   val akkaDependencies = Seq(
