@@ -38,7 +38,7 @@ I'm working on getting the instantiation of the DB etc running in a nice automat
 
 ### Useful SBT Commands
 
-`sbt`
+`./sbt`
 
 I have included an sbt wrapper from [this repo on GitHub](https://github.com/paulp/sbt-extras). If on Linux/Mac you might need to run `chmod +x ./sbt` to ensure this is executable before running it.
 
